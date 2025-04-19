@@ -1,13 +1,13 @@
 --1 - Receita, leads, conversão e ticket médio mês a mês						
--- mês	leads (#)	vendas (#)	receita (k, R$)	conversão (%)	ticket médio (k, R$)	
-
+-- mês	leads (#)	vendas (#)		conversão (%)	ticket médio (k, R$)	
 
                               -- 1 mês leads (#)
-
+							  
 SELECT * FROM sales.funnel;
-
 SELECT * FROM sales.products; 
 
+WITH
+   leads AS ( 
 SELECT 
      date_trunc('month', visit_page_date)::date AS visit_page_month,
 	 
@@ -15,11 +15,11 @@ SELECT
 	
 FROM sales.funnel
 GROUP BY visit_page_month
-ORDER BY visit_page_month; 
+ORDER BY visit_page_month), 
 
-                              -- 2 vendas (#)
+                              -- 2 vendas (#) receita (k, R$)
 
-SELECT 
+payments AS (SELECT 
      date_trunc('month', fun.paid_date)::date AS paid_month,
 	 COUNT(fun.paid_date) AS paid_count, 
 	 SUM(pro.price * (1 + fun.discount)) AS receita
@@ -28,12 +28,17 @@ LEFT JOIN sales.products AS pro
      ON fun.product_id = pro.product_id
 	 WHERE fun.paid_date IS NOT NULL 
 	 GROUP BY paid_month
-	 ORDER BY paid_month DESC;
+	 ORDER BY paid_month DESC) 
 
--- PRICE = 51000 x ( 1 + 0.34 ) = TOTAL DA VENDA = 
-SUM(pro.price * (1 + fun.discount)) AS receita
+--                                     conversão (%) ticket médio (k, R$)	
 
-
-
-
-
+SELECT 
+    leads.visit_page_month AS "mês", 
+	leads.visit_page_count AS "leads (#)", 
+	payments.paid_count AS "Vendas (#)", 
+	(payments.receita/1000) AS "receita (k, R$)",
+	(payments.paid_count::float/leads.visit_page_count::float) AS "Conversão (%)", 
+	(payments.receita/payments.paid_count/1000) AS "ticket médio (k, R$)"
+FROM leads 
+LEFT JOIN payments 
+    ON  leads.visit_page_month = paid_month; 
