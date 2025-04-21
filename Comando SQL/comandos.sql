@@ -42,3 +42,24 @@ SELECT
 FROM leads 
 LEFT JOIN payments 
     ON  leads.visit_page_month = paid_month; 
+
+
+-- ( Query ) ESTADOS QUE MAIS VENDERAM 
+-- COLUNAS: PAIS, ESTADO, VENDAS (#)
+
+
+SELECT * FROM sales.funnel; 
+
+SELECT * FROM sales.customers; 
+
+
+SELECT
+    'BrazIL' AS pais,
+    state AS estado, 
+	COUNT(paid_date) AS Numero_Vendas
+	
+FROM sales.funnel AS fun 
+LEFT JOIN sales.customers AS cus
+     ON fun.customer_id = cus.customer_id
+GROUP BY state
+ORDER BY Numero_Vendas DESC; 
