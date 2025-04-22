@@ -63,3 +63,21 @@ LEFT JOIN sales.customers AS cus
      ON fun.customer_id = cus.customer_id
 GROUP BY state
 ORDER BY Numero_Vendas DESC; 
+
+
+
+
+-- (QUERY 3) MARCAS que mais venderam no mês  
+-- Coluna: marca, vendas (#)
+
+SELECT 
+    pro.brand AS marca, 
+	COUNT(fun.paid_date) AS "Vendas (#)"
+FROM sales.funnel AS fun 
+LEFT JOIN sales.products AS pro 
+     ON fun.product_id = pro.product_id
+WHERE paid_date BETWEEN '2021-08-01' AND '2021-08-31'	 
+GROUP BY marca
+ORDER BY "Vendas (#)" DESC
+LIMIT 5;  
+
