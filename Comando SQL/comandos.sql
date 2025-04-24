@@ -99,3 +99,23 @@ ORDER BY "Vendas (#)" DESC
 LIMIT 5;  
 
 
+-- Dia da semana com o maior numero de visitas ao site 
+-- colunas dia_semana, dia_da_semana, visitas (#)
+
+
+select 
+    EXTRACT('dow', FROM visit_page_date) AS dia_semana,
+	CASE WHEN EXTRACT('dow' FROM visit_page_date) = 0 THEN 'domingo'   
+	CASE WHEN EXTRACT('dow' FROM visit_page_date) = 1 THEN 'segunda' 
+	CASE WHEN EXTRACT('dow' FROM visit_page_date) = 2 THEN 'terça' 
+	CASE WHEN EXTRACT('dow' FROM visit_page_date) = 3 THEN 'quarta' 
+	CASE WHEN EXTRACT('dow' FROM visit_page_date) = 4 THEN 'quinta' 
+	CASE WHEN EXTRACT('dow' FROM visit_page_date) = 5 THEN 'sexta' 
+	CASE WHEN EXTRACT('dow' FROM visit_page_date) = 6 THEN 'sábado' 		
+	"dia da semana ",
+	 "visitas (#)"
+
+FROM sales.funnel 
+WHERE visit_page_date BETWEEN '2021-08-01' AND '2021-08-31'
+GROUP BY dia_semana 
+ORDER BY dia_semana
