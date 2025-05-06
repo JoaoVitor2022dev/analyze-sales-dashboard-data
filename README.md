@@ -41,4 +41,4 @@ O projeto foi estruturado para atender a demandas reais de **Business Intelligen
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seuusuario/seurepositorio.git
+   git clone https://github.com/JoaoVitor2022dev/analyze-sales-dashboard-data.git
