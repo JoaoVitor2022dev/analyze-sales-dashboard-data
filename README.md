@@ -1,5 +1,8 @@
 # 📊 Projeto de Análise de Vendas com SQL (PostgreSQL)
 
+
+![image](https://github.com/user-attachments/assets/793b6487-cfa3-40b0-b703-ac46dce72956)
+
 ## 📝 Descrição
 
 Este projeto tem como objetivo realizar uma análise geral de dados de vendas utilizando **consultas SQL complexas** no **PostgreSQL**. Toda a informação é extraída diretamente do banco de dados, proporcionando insights estratégicos para a área comercial.
